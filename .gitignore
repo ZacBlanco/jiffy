@@ -1,0 +1,16 @@
+## Jiffy Gitignore file ##
+
+# Ignore .idea IntelliJ directory
+**/.idea/*
+
+# Ignore All .iml files from intelliJ
+*.iml
+
+# Ignore build folders
+**/target/*
+*.class
+
+# Specific .iml files
+jiffy-server/jiffy-server.iml
+jiffy-web/jiffy-web.iml
+jiffy-test/jiffy-test.iml
