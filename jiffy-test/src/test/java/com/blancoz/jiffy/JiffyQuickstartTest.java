@@ -29,9 +29,14 @@ public class JiffyQuickstartTest {
 
   @BeforeClass
   public static void setup() throws Exception {
-    config = new JiffyConfig();
-    config.setProperty("port", "" + port);
-    server = new JiffyServer(config);
+    server = new JiffyServer(port);
+
+    server.addResource(new Resource("/home", new BasicRequestHandler() {
+      @Override
+      protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+      }
+    }));
 
     server.addResource(buildResource("/home"));
     Runnable r = new Runnable() {

@@ -10,6 +10,12 @@ public class JiffyConfig {
     return Integer.parseInt(properties.get("port"));
   }
 
+  public void setPort(int port) {
+    if(port > 0) {
+      properties.put("port", port + "");
+    }
+  }
+
   public void setProperty(String key, String value) {
     properties.put(key, value);
   }
