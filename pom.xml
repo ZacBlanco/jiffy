@@ -9,7 +9,7 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Jiffy</name>
+    <name>jiffy</name>
     <description>Making jetty easy</description>
     <url>http://github.com/zacblanco/jiffy</url>
 
