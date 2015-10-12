@@ -33,7 +33,6 @@ public class JiffyServer {
   public void start() throws Exception {
     if(!appServer.isStarted()) {
       appServer.start();
-      appServer.dumpStdErr();
       appServer.join();
     }
   }
