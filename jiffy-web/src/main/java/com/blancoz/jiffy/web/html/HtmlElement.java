@@ -130,6 +130,11 @@ public class HtmlElement {
     return this;
   }
 
+  public HtmlElement up() {
+    return this.parent;
+  }
+
+
   public String getCloseTag() {
     return "</" + elementName + ">";
   }
