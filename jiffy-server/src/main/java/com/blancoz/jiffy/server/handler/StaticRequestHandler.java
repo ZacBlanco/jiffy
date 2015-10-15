@@ -26,6 +26,8 @@ public class StaticRequestHandler extends RequestHandler {
   }
   @Override
   protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setContentType("text/html");
+    response.setStatus(HttpServletResponse.SC_OK);
     response.getWriter().write(document.toString());
   }
 

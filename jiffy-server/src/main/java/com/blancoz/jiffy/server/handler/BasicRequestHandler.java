@@ -7,8 +7,14 @@ import java.io.IOException;
 
 
 public abstract class BasicRequestHandler extends RequestHandler {
+
+  public abstract void handleGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
   @Override
-  protected abstract void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+  protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setStatus(HttpServletResponse.SC_OK);
+    handleGet(request, response);
+  }
 
   @Override
   protected void put(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

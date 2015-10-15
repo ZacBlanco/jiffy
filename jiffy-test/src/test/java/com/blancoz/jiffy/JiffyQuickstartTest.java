@@ -33,12 +33,12 @@ public class JiffyQuickstartTest {
 
     server.addResource(new Resource("/home", new BasicRequestHandler() {
       @Override
-      protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public void handleGet(HttpServletRequest request, HttpServletResponse response) {
 
       }
     }));
 
-    server.addResource(buildResource("/home"));
+            server.addResource(buildResource("/home"));
     Runnable r = new Runnable() {
       public void run() {
         try {
@@ -66,7 +66,7 @@ public class JiffyQuickstartTest {
 
     RequestHandler handle = new BasicRequestHandler() {
       @Override
-      protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public void handleGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         sysTime = System.nanoTime();
         response.getWriter().write("System time: " + sysTime );
       }
