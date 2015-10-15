@@ -1,5 +1,7 @@
 package com.blancoz.jiffy.web;
 
+import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -47,5 +49,5 @@ public abstract class Document {
   }
 
   public abstract String toString();
-  public abstract void writeToFile(String location);
+  public abstract File writeToFile(String location) throws IOException;
 }

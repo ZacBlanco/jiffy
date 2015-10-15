@@ -1,5 +1,7 @@
 package com.blancoz.jiffy.web.css;
 
+import com.blancoz.jiffy.web.Document;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-public class CssDocument {
+public class CssDocument extends Document{
 
   HashMap<String, CssSelector> selectors;
   private String name;
@@ -62,7 +64,7 @@ public class CssDocument {
   }
 
 
-  public File toFile(String directory) throws IOException {
+  public File writeToFile(String directory) throws IOException {
     File dirs = new File(directory);
 
     if(!dirs.exists()) {

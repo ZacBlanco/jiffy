@@ -41,7 +41,7 @@ public class HtmlDocumentTest {
     HtmlDocument document = new HtmlDocument("TestDoc");
     document.setTitle("TestDoc");
     document.addContent("TestContent");
-    File f = document.toFile("./" + testDir);
+    File f = document.writeToFile("./" + testDir);
 
     if(!new File("./" + testDir + "/" + document.getName() + ".html").exists()) {
       fail("File for document does not exist");

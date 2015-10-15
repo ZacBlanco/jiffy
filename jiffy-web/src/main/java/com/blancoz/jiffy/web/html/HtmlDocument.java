@@ -1,13 +1,14 @@
 package com.blancoz.jiffy.web.html;
 
 
+import com.blancoz.jiffy.web.Document;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-public class HtmlDocument {
-  final private String name;
+public class HtmlDocument extends Document {
   private HtmlElement root;
   private HtmlElement head;
   public HtmlElement body;
@@ -72,7 +73,7 @@ public class HtmlDocument {
     return ret;
   }
 
-  public File toFile(String directory) throws IOException {
+  public File writeToFile(String directory) throws IOException {
     File dirs = new File(directory);
 
     if(!dirs.exists()) {
