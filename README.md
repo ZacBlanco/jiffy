@@ -16,7 +16,7 @@ JiffyServer app = new JiffyServer(7070);
 
 app.addResource(new Resource("/home", new BasicRequestHandler() {
       @Override
-      protected void get(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      protected void handleGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         res.getWriter().write("Hello World!");
       }
     }));
