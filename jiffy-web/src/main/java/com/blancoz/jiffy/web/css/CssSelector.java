@@ -1,11 +1,11 @@
 package com.blancoz.jiffy.web.css;
 
-
 import java.util.HashMap;
+import java.util.Map;
 
 public class CssSelector {
-  String selector;
-
+  private String selector;
+  private String name;
   HashMap<String, String> properties;
 
   public CssSelector(String selector, HashMap<String, String> properties) {
@@ -18,7 +18,11 @@ public class CssSelector {
     properties = new HashMap<String, String>();
   }
 
-  public void addProperties(String name, String value) {
+  public String getSelector() {
+    return selector;
+  }
+
+  public void addProperty(String name, String value) {
     if(name != null && value != null) {
       properties.put(name, value);
     } else {
@@ -35,7 +39,7 @@ public class CssSelector {
   }
 
   public boolean hasPropertyValue(String propValue) {
-    return properties.containsKey(propValue);
+    return properties.containsValue(propValue);
   }
 
   public void setSelector(String selector) {
@@ -46,5 +50,18 @@ public class CssSelector {
     }
   }
 
+  public HashMap<String, String> getProperties() {
+    return properties;
+  }
+
+  public String toString() {
+    String all = this.selector + " {\r\n";
+    for(Map.Entry<String, String> e : properties.entrySet()) {
+      all += e.getKey() + ":" + e.getValue() + ";\r\n";
+    }
+    all += "}\r\n";
+
+    return all;
+  }
 
 }
