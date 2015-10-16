@@ -2,9 +2,10 @@ package com.blancoz.jiffy.web.html;
 
 
 import com.blancoz.jiffy.web.Document;
+import com.blancoz.jiffy.util.IOUtils;
+import com.blancoz.jiffy.web.DocumentType;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
@@ -12,15 +13,13 @@ public class HtmlDocument extends Document {
   private HtmlElement root;
   private HtmlElement head;
   public HtmlElement body;
-  private String title;
 
   public String getName() {
     return name;
   }
 
   public HtmlDocument(String name) {
-    if(name == null) { throw new NullPointerException("Name in HtmlDocument cannot be null"); }
-    this.name = name;
+    super(name, DocumentType.HTML_DOCUMENT);
     root = createDocumentStructure();
     setTitle(name);
   }
@@ -72,34 +71,6 @@ public class HtmlDocument extends Document {
     ret += root.toString();
     return ret;
   }
-
-  public File writeToFile(String directory) throws IOException {
-    File dirs = new File(directory);
-
-    if(!dirs.exists()) {
-      if(!dirs.mkdirs()) {
-        throw new IOException("Could not create directory structure " + directory);
-      }
-    }
-
-    File f = new File(dirs.getAbsolutePath() + "/" + getName() + ".html");
-
-    if(f.exists() && f.canWrite()) {
-      return writeFile(f, this);
-    } else if (f.createNewFile() && f.canWrite()) {
-      return writeFile(f, this);
-    } else {
-      throw new IOException("Could not write file to location " + directory );
-    }
-  }
-
-  private static File writeFile(File f, HtmlDocument d) throws IOException {
-    FileOutputStream fsout = new FileOutputStream(f);
-    fsout.write(d.toString().getBytes());
-    fsout.close();
-    return f;
-  }
-
 
 
 

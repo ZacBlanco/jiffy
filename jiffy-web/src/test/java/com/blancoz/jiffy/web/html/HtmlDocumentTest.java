@@ -29,7 +29,7 @@ public class HtmlDocumentTest {
     try{
       HtmlDocument d = new HtmlDocument(null);
       fail();
-    } catch (NullPointerException e) { System.getProperties(); }
+    } catch (IllegalArgumentException e) { }
 
 
 

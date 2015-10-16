@@ -14,6 +14,7 @@
     <url>http://github.com/zacblanco/jiffy</url>
 
     <modules>
+        <module>jiffy-util</module>
         <module>jiffy-server</module>
         <module>jiffy-test</module>
         <module>jiffy-web</module>
