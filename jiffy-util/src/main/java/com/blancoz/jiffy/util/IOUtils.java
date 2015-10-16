@@ -44,9 +44,13 @@ public class IOUtils {
     String content = "";
     String line = "";
     while((line = reader.readLine()) != null) {
-      content += line;
+      content += line + "\r\n";
     }
     reader.close();
+    int c =  content.lastIndexOf("\r\n");
+    if( c > 0 ) {
+      content = content.substring(0, c);
+    }
     return content;
   }
 

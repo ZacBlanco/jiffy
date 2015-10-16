@@ -17,7 +17,7 @@ public abstract class Document {
 
 
   // Static map for file extensions
-  protected static final HashMap<DocumentType, String> fileExtensions;
+  private static final HashMap<DocumentType, String> fileExtensions;
   static  {
     fileExtensions = new HashMap<DocumentType, String>();
     fileExtensions.put(DocumentType.HTML_DOCUMENT, ".html");
