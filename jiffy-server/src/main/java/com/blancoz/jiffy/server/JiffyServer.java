@@ -2,10 +2,14 @@ package com.blancoz.jiffy.server;
 
 
 import com.blancoz.jiffy.server.config.JiffyConfig;
+import com.blancoz.jiffy.server.handler.BasicErrorHandler;
 import com.blancoz.jiffy.server.resource.Resource;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+
+import javax.servlet.Servlet;
 
 public class JiffyServer {
 
@@ -28,6 +32,14 @@ public class JiffyServer {
     context.setContextPath("/");
     server.setHandler(context);
     return server;
+  }
+
+  public void addErrorHandler(ErrorHandler errorHandler) {
+    if(errorHandler != null) {
+      context.addBean(errorHandler);
+      appServer.addBean(errorHandler);
+      context.setErrorHandler(errorHandler);
+    }
   }
 
   public void start() throws Exception {

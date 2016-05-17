@@ -1,13 +1,9 @@
 package com.blancoz.jiffy;
 
-import com.blancoz.jiffy.server.JiffyServer;
-import com.blancoz.jiffy.server.config.JiffyConfig;
-import com.blancoz.jiffy.server.handler.BasicErrorHandler;
-import com.blancoz.jiffy.server.handler.BasicRequestHandler;
-import com.blancoz.jiffy.server.handler.RequestHandler;
-import com.blancoz.jiffy.server.resource.Resource;
 
-import com.jayway.restassured.RestAssured;
+import com.blancoz.jiffy.server.JiffyServer;
+import com.blancoz.jiffy.server.handler.*;
+import com.blancoz.jiffy.server.resource.Resource;
 import org.eclipse.jetty.server.Request;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -19,22 +15,16 @@ import org.junit.runner.Description;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-
-
-public class JiffyQuickstartTest {
+public class JiffyFileDownloadTest {
 
   static JiffyServer server;
-  static JiffyConfig config;
   static int port = 7070;
-  static long sysTime;
-  static String Err404 = "404. Page Not Found";
-
 
   @BeforeClass
-  public static void setup() throws Exception {
+  public static void main(String[] args) throws Exception {
     server = new JiffyServer(port);
 
     server.addResource(new Resource("/home", new BasicRequestHandler() {
@@ -44,15 +34,19 @@ public class JiffyQuickstartTest {
       }
     }));
 
-    BasicErrorHandler errorHandler = new BasicErrorHandler() {
-      @Override
-      public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getWriter().write(Err404);
-      }
-    };
-    server.addErrorHandler(errorHandler);
+//    BasicErrorHandler errorHandler = new BasicErrorHandler() {
+//      @Override
+//      public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        response.getWriter().write(Err404);
+//      }
+//    };
+//    server.addErrorHandler(errorHandler);
 
-            server.addResource(buildResource("/home"));
+    String path = "/Users/zblanco/Documents/Boxes/Sandbox_HDP_2.3_1_virtualbox (1).ova";
+
+    Resource box = fileResource(path, "/hadoop-sandbox.ova");
+    server.addResource(box);
+    server.addResource(buildResource("/home"));
     Runnable r = new Runnable() {
       public void run() {
         try {
@@ -82,6 +76,7 @@ public class JiffyQuickstartTest {
     }
   };
 
+
   @AfterClass
   public static void tearDown() throws Exception {
     if(server.isStarted()) {
@@ -89,37 +84,28 @@ public class JiffyQuickstartTest {
     }
   }
 
+
   public static Resource buildResource(String location) {
 
     RequestHandler handle = new BasicRequestHandler() {
       @Override
       public void handleGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        sysTime = System.nanoTime();
-        response.getWriter().write("System time: " + sysTime );
+        long sysTime = System.nanoTime();
+        response.getWriter().write("System time: " + sysTime);
       }
     };
 
     Resource r = new Resource(location, handle);
     return r;
+
   }
 
+  public static Resource fileResource(String fileLocation, String location) {
+    File f = new File(fileLocation);
 
-  @Test
-  public void getSystemTime() {
+    FileDownloadHandler handle = new FileDownloadHandler(f);
 
-    String url = "http://localhost:"  + port + "/home";
-    String response = RestAssured.given().when().get(url).getBody().asString();
-    assertTrue(response.contains("System time:"));
-    assertTrue(response.contains("" + sysTime));
+    Resource r = new Resource(location, handle);
+    return r;
   }
-
-  @Test
-  public void testErrorHandler() {
-
-    String url = "http://localhost:"  + port + "/home/nonexistent";
-    String response = RestAssured.given().when().get(url).getBody().asString();
-    assertTrue(response.equals(Err404));
-  }
-
-
 }
